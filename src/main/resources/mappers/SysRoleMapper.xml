@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guonl.dao.SysRoleMapper">
+  <resultMap id="BaseResultMap" type="com.guonl.po.SysRole">
+    <id column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="role_key" jdbcType="VARCHAR" property="roleKey" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="role_value" jdbcType="VARCHAR" property="roleValue" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    role_id, role_key, create_time, description, role_value, company_id
+  </sql>
+  <select id="selectByExample" parameterType="com.guonl.po.SysRoleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guonl.po.SysRoleExample">
+    delete from sys_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guonl.po.SysRole">
+    insert into sys_role (role_id, role_key, create_time, 
+      description, role_value, company_id
+      )
+    values (#{roleId,jdbcType=INTEGER}, #{roleKey,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{roleValue,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guonl.po.SysRole">
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="roleKey != null">
+        role_key,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="roleValue != null">
+        role_value,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="roleKey != null">
+        #{roleKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="roleValue != null">
+        #{roleValue,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guonl.po.SysRoleExample" resultType="java.lang.Long">
+    select count(*) from sys_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_role
+    <set>
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleKey != null">
+        role_key = #{record.roleKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleValue != null">
+        role_value = #{record.roleValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_role
+    set role_id = #{record.roleId,jdbcType=INTEGER},
+      role_key = #{record.roleKey,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      role_value = #{record.roleValue,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guonl.po.SysRole">
+    update sys_role
+    <set>
+      <if test="roleKey != null">
+        role_key = #{roleKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="roleValue != null">
+        role_value = #{roleValue,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guonl.po.SysRole">
+    update sys_role
+    set role_key = #{roleKey,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      role_value = #{roleValue,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT}
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+  <select id="selectOneByExample" parameterType="com.guonl.po.SysRoleExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    select
+    <include refid="Base_Column_List" />
+    from sys_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    limit 1
+  </select>
+  <insert id="batchInsert" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    insert into sys_role
+    (role_id, role_key, create_time, description, role_value, company_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.roleId,jdbcType=INTEGER}, #{item.roleKey,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR}, 
+        #{item.description,jdbcType=VARCHAR}, #{item.roleValue,jdbcType=VARCHAR}, #{item.companyId,jdbcType=BIGINT}
+        )
+    </foreach>
+  </insert>
+  <insert id="batchInsertSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    insert into sys_role (
+    <foreach collection="selective" item="column" separator=",">
+      ${column.value}
+    </foreach>
+    )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (
+      <foreach collection="selective" item="column" separator=",">
+        <if test="'role_id' == column.value">
+          #{item.roleId,jdbcType=INTEGER}
+        </if>
+        <if test="'role_key' == column.value">
+          #{item.roleKey,jdbcType=VARCHAR}
+        </if>
+        <if test="'create_time' == column.value">
+          #{item.createTime,jdbcType=VARCHAR}
+        </if>
+        <if test="'description' == column.value">
+          #{item.description,jdbcType=VARCHAR}
+        </if>
+        <if test="'role_value' == column.value">
+          #{item.roleValue,jdbcType=VARCHAR}
+        </if>
+        <if test="'company_id' == column.value">
+          #{item.companyId,jdbcType=BIGINT}
+        </if>
+      </foreach>
+      )
+    </foreach>
+  </insert>
+</mapper>

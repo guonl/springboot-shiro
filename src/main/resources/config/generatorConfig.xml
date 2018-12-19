@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <!-- 数据Model链式构建插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ModelBuilderPlugin"/>
+        <!-- Example Criteria 增强插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleEnhancedPlugin"/>
+        <!-- 数据Model属性对应Column获取插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
+        <!-- 查询单条数据插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.SelectOneByExamplePlugin"/>
+        <!-- 批量插入插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.BatchInsertPlugin"/>
+        <!-- 官方ConstructorBased配置BUG临时修正插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ConstructorBasedBugFixPlugin" />
+
+        <!-- 去除自动生成的注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!-- 生发环境数据库配置:修改配置 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/db_shiro?useSSL=true" userId="root"
+                        password="abc-123456">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 持久化对象：targetPackage：修改包名 targetProject：修改项目名 或 去除 -->
+        <javaModelGenerator targetPackage="com.guonl.po"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 数据访问对象接口: targetPackage：修改包名 targetProject：修改项目名 或 去除 -->
+        <sqlMapGenerator targetPackage="mappers"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 数据访问对象xml实现:targetPackage：修改包名 targetProject：修改项目名 或 去除 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.guonl.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!-- 表转代码：tableName：修改表名 -->
+        <table tableName="sys_authority"></table>
+        <table tableName="sys_department"></table>
+        <table tableName="sys_role"></table>
+        <table tableName="sys_role_authority"></table>
+        <table tableName="sys_role_permission"></table>
+        <table tableName="sys_user"></table>
+        <table tableName="sys_user_role"></table>
+    </context>
+</generatorConfiguration>
