@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.guonl.dao.SysUserRoleMapper">
-  <resultMap id="BaseResultMap" type="com.guonl.po.SysUserRoleKey">
+  <resultMap id="BaseResultMap" type="com.guonl.po.SysUserRole">
     <id column="user_id" jdbcType="BIGINT" property="userId" />
     <id column="role_id" jdbcType="INTEGER" property="roleId" />
   </resultMap>
@@ -80,7 +80,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.guonl.po.SysUserRoleKey">
+  <delete id="deleteByPrimaryKey" parameterType="com.guonl.po.SysUserRole">
     delete from sys_user_role
     where user_id = #{userId,jdbcType=BIGINT}
       and role_id = #{roleId,jdbcType=INTEGER}
@@ -91,11 +91,11 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.guonl.po.SysUserRoleKey">
+  <insert id="insert" parameterType="com.guonl.po.SysUserRole">
     insert into sys_user_role (user_id, role_id)
     values (#{userId,jdbcType=BIGINT}, #{roleId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.guonl.po.SysUserRoleKey">
+  <insert id="insertSelective" parameterType="com.guonl.po.SysUserRole">
     insert into sys_user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">

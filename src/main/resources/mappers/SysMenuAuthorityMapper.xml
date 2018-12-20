@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.guonl.dao.SysAuthorityMapper">
-  <resultMap id="BaseResultMap" type="com.guonl.po.SysAuthority">
+<mapper namespace="com.guonl.dao.SysMenuAuthorityMapper">
+  <resultMap id="BaseResultMap" type="com.guonl.po.SysMenuAuthority">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="data_url" jdbcType="VARCHAR" property="dataUrl" />
     <result column="menu_class" jdbcType="VARCHAR" property="menuClass" />
@@ -74,13 +74,13 @@
     id, data_url, menu_class, menu_code, menu_name, parent_menucode, sequence, menu_type, 
     create_time
   </sql>
-  <select id="selectByExample" parameterType="com.guonl.po.SysAuthorityExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.guonl.po.SysMenuAuthorityExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sys_authority
+    from sys_menu_authority
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from sys_authority
+    from sys_menu_authority
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from sys_authority
+    delete from sys_menu_authority
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.guonl.po.SysAuthorityExample">
-    delete from sys_authority
+  <delete id="deleteByExample" parameterType="com.guonl.po.SysMenuAuthorityExample">
+    delete from sys_menu_authority
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.guonl.po.SysAuthority">
-    insert into sys_authority (id, data_url, menu_class, 
+  <insert id="insert" parameterType="com.guonl.po.SysMenuAuthority">
+    insert into sys_menu_authority (id, data_url, menu_class, 
       menu_code, menu_name, parent_menucode, 
       sequence, menu_type, create_time
       )
@@ -114,8 +114,8 @@
       #{sequence,jdbcType=BIGINT}, #{menuType,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.guonl.po.SysAuthority">
-    insert into sys_authority
+  <insert id="insertSelective" parameterType="com.guonl.po.SysMenuAuthority">
+    insert into sys_menu_authority
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -175,14 +175,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.guonl.po.SysAuthorityExample" resultType="java.lang.Long">
-    select count(*) from sys_authority
+  <select id="countByExample" parameterType="com.guonl.po.SysMenuAuthorityExample" resultType="java.lang.Long">
+    select count(*) from sys_menu_authority
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update sys_authority
+    update sys_menu_authority
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -217,7 +217,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update sys_authority
+    update sys_menu_authority
     set id = #{record.id,jdbcType=BIGINT},
       data_url = #{record.dataUrl,jdbcType=VARCHAR},
       menu_class = #{record.menuClass,jdbcType=VARCHAR},
@@ -231,8 +231,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.guonl.po.SysAuthority">
-    update sys_authority
+  <update id="updateByPrimaryKeySelective" parameterType="com.guonl.po.SysMenuAuthority">
+    update sys_menu_authority
     <set>
       <if test="dataUrl != null">
         data_url = #{dataUrl,jdbcType=VARCHAR},
@@ -261,8 +261,8 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.guonl.po.SysAuthority">
-    update sys_authority
+  <update id="updateByPrimaryKey" parameterType="com.guonl.po.SysMenuAuthority">
+    update sys_menu_authority
     set data_url = #{dataUrl,jdbcType=VARCHAR},
       menu_class = #{menuClass,jdbcType=VARCHAR},
       menu_code = #{menuCode,jdbcType=VARCHAR},
@@ -273,7 +273,7 @@
       create_time = #{createTime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectOneByExample" parameterType="com.guonl.po.SysAuthorityExample" resultMap="BaseResultMap">
+  <select id="selectOneByExample" parameterType="com.guonl.po.SysMenuAuthorityExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated
       This element is automatically generated by MyBatis Generator, do not modify.
@@ -281,7 +281,7 @@
     -->
     select
     <include refid="Base_Column_List" />
-    from sys_authority
+    from sys_menu_authority
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -296,7 +296,7 @@
       This element is automatically generated by MyBatis Generator, do not modify.
       @project https://github.com/itfsw/mybatis-generator-plugin
     -->
-    insert into sys_authority
+    insert into sys_menu_authority
     (id, data_url, menu_class, menu_code, menu_name, parent_menucode, sequence, menu_type, 
       create_time)
     values
@@ -313,7 +313,7 @@
       This element is automatically generated by MyBatis Generator, do not modify.
       @project https://github.com/itfsw/mybatis-generator-plugin
     -->
-    insert into sys_authority (
+    insert into sys_menu_authority (
     <foreach collection="selective" item="column" separator=",">
       ${column.value}
     </foreach>
