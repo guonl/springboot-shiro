@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.guonl.dao.SysRoleAuthorityMapper">
-  <resultMap id="BaseResultMap" type="com.guonl.po.SysRoleAuthority">
-    <id column="id" jdbcType="BIGINT" property="id" />
+<mapper namespace="com.guonl.dao.SysPermissionMapper">
+  <resultMap id="BaseResultMap" type="com.guonl.po.SysPermission">
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="menu_code" jdbcType="VARCHAR" property="menuCode" />
-    <result column="role_key" jdbcType="VARCHAR" property="roleKey" />
-    <result column="menu_type" jdbcType="INTEGER" property="menuType" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="permission_code" jdbcType="VARCHAR" property="permissionCode" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="required_permission" jdbcType="BIT" property="requiredPermission" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, menu_code, role_key, menu_type
+    id, menu_code, menu_name, permission_code, permission_name, required_permission
   </sql>
-  <select id="selectByExample" parameterType="com.guonl.po.SysRoleAuthorityExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.guonl.po.SysPermissionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sys_role_authority
+    from sys_permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -82,30 +84,32 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from sys_role_authority
-    where id = #{id,jdbcType=BIGINT}
+    from sys_permission
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from sys_role_authority
-    where id = #{id,jdbcType=BIGINT}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_permission
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.guonl.po.SysRoleAuthorityExample">
-    delete from sys_role_authority
+  <delete id="deleteByExample" parameterType="com.guonl.po.SysPermissionExample">
+    delete from sys_permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.guonl.po.SysRoleAuthority">
-    insert into sys_role_authority (id, menu_code, role_key, 
-      menu_type)
-    values (#{id,jdbcType=BIGINT}, #{menuCode,jdbcType=VARCHAR}, #{roleKey,jdbcType=VARCHAR}, 
-      #{menuType,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.guonl.po.SysPermission">
+    insert into sys_permission (id, menu_code, menu_name, 
+      permission_code, permission_name, required_permission
+      )
+    values (#{id,jdbcType=INTEGER}, #{menuCode,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, 
+      #{permissionCode,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, #{requiredPermission,jdbcType=BIT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.guonl.po.SysRoleAuthority">
-    insert into sys_role_authority
+  <insert id="insertSelective" parameterType="com.guonl.po.SysPermission">
+    insert into sys_permission
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -113,48 +117,66 @@
       <if test="menuCode != null">
         menu_code,
       </if>
-      <if test="roleKey != null">
-        role_key,
+      <if test="menuName != null">
+        menu_name,
       </if>
-      <if test="menuType != null">
-        menu_type,
+      <if test="permissionCode != null">
+        permission_code,
+      </if>
+      <if test="permissionName != null">
+        permission_name,
+      </if>
+      <if test="requiredPermission != null">
+        required_permission,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=BIGINT},
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="menuCode != null">
         #{menuCode,jdbcType=VARCHAR},
       </if>
-      <if test="roleKey != null">
-        #{roleKey,jdbcType=VARCHAR},
+      <if test="menuName != null">
+        #{menuName,jdbcType=VARCHAR},
       </if>
-      <if test="menuType != null">
-        #{menuType,jdbcType=INTEGER},
+      <if test="permissionCode != null">
+        #{permissionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="requiredPermission != null">
+        #{requiredPermission,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.guonl.po.SysRoleAuthorityExample" resultType="java.lang.Long">
-    select count(*) from sys_role_authority
+  <select id="countByExample" parameterType="com.guonl.po.SysPermissionExample" resultType="java.lang.Long">
+    select count(*) from sys_permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update sys_role_authority
+    update sys_permission
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.menuCode != null">
         menu_code = #{record.menuCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.roleKey != null">
-        role_key = #{record.roleKey,jdbcType=VARCHAR},
+      <if test="record.menuName != null">
+        menu_name = #{record.menuName,jdbcType=VARCHAR},
       </if>
-      <if test="record.menuType != null">
-        menu_type = #{record.menuType,jdbcType=INTEGER},
+      <if test="record.permissionCode != null">
+        permission_code = #{record.permissionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionName != null">
+        permission_name = #{record.permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requiredPermission != null">
+        required_permission = #{record.requiredPermission,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -162,38 +184,48 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update sys_role_authority
-    set id = #{record.id,jdbcType=BIGINT},
+    update sys_permission
+    set id = #{record.id,jdbcType=INTEGER},
       menu_code = #{record.menuCode,jdbcType=VARCHAR},
-      role_key = #{record.roleKey,jdbcType=VARCHAR},
-      menu_type = #{record.menuType,jdbcType=INTEGER}
+      menu_name = #{record.menuName,jdbcType=VARCHAR},
+      permission_code = #{record.permissionCode,jdbcType=VARCHAR},
+      permission_name = #{record.permissionName,jdbcType=VARCHAR},
+      required_permission = #{record.requiredPermission,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.guonl.po.SysRoleAuthority">
-    update sys_role_authority
+  <update id="updateByPrimaryKeySelective" parameterType="com.guonl.po.SysPermission">
+    update sys_permission
     <set>
       <if test="menuCode != null">
         menu_code = #{menuCode,jdbcType=VARCHAR},
       </if>
-      <if test="roleKey != null">
-        role_key = #{roleKey,jdbcType=VARCHAR},
+      <if test="menuName != null">
+        menu_name = #{menuName,jdbcType=VARCHAR},
       </if>
-      <if test="menuType != null">
-        menu_type = #{menuType,jdbcType=INTEGER},
+      <if test="permissionCode != null">
+        permission_code = #{permissionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="requiredPermission != null">
+        required_permission = #{requiredPermission,jdbcType=BIT},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.guonl.po.SysRoleAuthority">
-    update sys_role_authority
+  <update id="updateByPrimaryKey" parameterType="com.guonl.po.SysPermission">
+    update sys_permission
     set menu_code = #{menuCode,jdbcType=VARCHAR},
-      role_key = #{roleKey,jdbcType=VARCHAR},
-      menu_type = #{menuType,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
+      menu_name = #{menuName,jdbcType=VARCHAR},
+      permission_code = #{permissionCode,jdbcType=VARCHAR},
+      permission_name = #{permissionName,jdbcType=VARCHAR},
+      required_permission = #{requiredPermission,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectOneByExample" parameterType="com.guonl.po.SysRoleAuthorityExample" resultMap="BaseResultMap">
+  <select id="selectOneByExample" parameterType="com.guonl.po.SysPermissionExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated
       This element is automatically generated by MyBatis Generator, do not modify.
@@ -201,7 +233,7 @@
     -->
     select
     <include refid="Base_Column_List" />
-    from sys_role_authority
+    from sys_permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -216,12 +248,13 @@
       This element is automatically generated by MyBatis Generator, do not modify.
       @project https://github.com/itfsw/mybatis-generator-plugin
     -->
-    insert into sys_role_authority
-    (id, menu_code, role_key, menu_type)
+    insert into sys_permission
+    (id, menu_code, menu_name, permission_code, permission_name, required_permission)
     values
     <foreach collection="list" item="item" separator=",">
-      (#{item.id,jdbcType=BIGINT}, #{item.menuCode,jdbcType=VARCHAR}, #{item.roleKey,jdbcType=VARCHAR}, 
-        #{item.menuType,jdbcType=INTEGER})
+      (#{item.id,jdbcType=INTEGER}, #{item.menuCode,jdbcType=VARCHAR}, #{item.menuName,jdbcType=VARCHAR}, 
+        #{item.permissionCode,jdbcType=VARCHAR}, #{item.permissionName,jdbcType=VARCHAR}, 
+        #{item.requiredPermission,jdbcType=BIT})
     </foreach>
   </insert>
   <insert id="batchInsertSelective" parameterType="map">
@@ -230,7 +263,7 @@
       This element is automatically generated by MyBatis Generator, do not modify.
       @project https://github.com/itfsw/mybatis-generator-plugin
     -->
-    insert into sys_role_authority (
+    insert into sys_permission (
     <foreach collection="selective" item="column" separator=",">
       ${column.value}
     </foreach>
@@ -240,16 +273,22 @@
       (
       <foreach collection="selective" item="column" separator=",">
         <if test="'id' == column.value">
-          #{item.id,jdbcType=BIGINT}
+          #{item.id,jdbcType=INTEGER}
         </if>
         <if test="'menu_code' == column.value">
           #{item.menuCode,jdbcType=VARCHAR}
         </if>
-        <if test="'role_key' == column.value">
-          #{item.roleKey,jdbcType=VARCHAR}
+        <if test="'menu_name' == column.value">
+          #{item.menuName,jdbcType=VARCHAR}
         </if>
-        <if test="'menu_type' == column.value">
-          #{item.menuType,jdbcType=INTEGER}
+        <if test="'permission_code' == column.value">
+          #{item.permissionCode,jdbcType=VARCHAR}
+        </if>
+        <if test="'permission_name' == column.value">
+          #{item.permissionName,jdbcType=VARCHAR}
+        </if>
+        <if test="'required_permission' == column.value">
+          #{item.requiredPermission,jdbcType=BIT}
         </if>
       </foreach>
       )

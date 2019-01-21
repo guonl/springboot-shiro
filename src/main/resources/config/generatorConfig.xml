@@ -47,12 +47,10 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 表转代码：tableName：修改表名 -->
-        <table tableName="sys_menu_authority"></table>
-        <table tableName="sys_department"></table>
+        <table tableName="article"></table>
+        <table tableName="sys_permission"></table>
         <table tableName="sys_role"></table>
-        <table tableName="sys_role_authority"></table>
         <table tableName="sys_role_permission"></table>
         <table tableName="sys_user"></table>
-        <table tableName="sys_user_role"></table>
     </context>
 </generatorConfiguration>

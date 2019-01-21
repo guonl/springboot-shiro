@@ -2,12 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.guonl.dao.SysRoleMapper">
   <resultMap id="BaseResultMap" type="com.guonl.po.SysRole">
-    <id column="role_id" jdbcType="INTEGER" property="roleId" />
-    <result column="role_key" jdbcType="VARCHAR" property="roleKey" />
-    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="role_value" jdbcType="VARCHAR" property="roleValue" />
-    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_status" jdbcType="VARCHAR" property="deleteStatus" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    role_id, role_key, create_time, description, role_value, company_id
+    id, role_name, create_time, update_time, delete_status
   </sql>
   <select id="selectByExample" parameterType="com.guonl.po.SysRoleExample" resultMap="BaseResultMap">
     select
@@ -88,11 +87,11 @@
     select 
     <include refid="Base_Column_List" />
     from sys_role
-    where role_id = #{roleId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_role
-    where role_id = #{roleId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.guonl.po.SysRoleExample">
     delete from sys_role
@@ -101,53 +100,45 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guonl.po.SysRole">
-    insert into sys_role (role_id, role_key, create_time, 
-      description, role_value, company_id
-      )
-    values (#{roleId,jdbcType=INTEGER}, #{roleKey,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{roleValue,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}
-      )
+    insert into sys_role (id, role_name, create_time, 
+      update_time, delete_status)
+    values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleteStatus,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.guonl.po.SysRole">
     insert into sys_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="roleId != null">
-        role_id,
+      <if test="id != null">
+        id,
       </if>
-      <if test="roleKey != null">
-        role_key,
+      <if test="roleName != null">
+        role_name,
       </if>
       <if test="createTime != null">
         create_time,
       </if>
-      <if test="description != null">
-        description,
+      <if test="updateTime != null">
+        update_time,
       </if>
-      <if test="roleValue != null">
-        role_value,
-      </if>
-      <if test="companyId != null">
-        company_id,
+      <if test="deleteStatus != null">
+        delete_status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="roleId != null">
-        #{roleId,jdbcType=INTEGER},
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="roleKey != null">
-        #{roleKey,jdbcType=VARCHAR},
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="roleValue != null">
-        #{roleValue,jdbcType=VARCHAR},
-      </if>
-      <if test="companyId != null">
-        #{companyId,jdbcType=BIGINT},
+      <if test="deleteStatus != null">
+        #{deleteStatus,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -160,23 +151,20 @@
   <update id="updateByExampleSelective" parameterType="map">
     update sys_role
     <set>
-      <if test="record.roleId != null">
-        role_id = #{record.roleId,jdbcType=INTEGER},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.roleKey != null">
-        role_key = #{record.roleKey,jdbcType=VARCHAR},
+      <if test="record.roleName != null">
+        role_name = #{record.roleName,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.description != null">
-        description = #{record.description,jdbcType=VARCHAR},
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.roleValue != null">
-        role_value = #{record.roleValue,jdbcType=VARCHAR},
-      </if>
-      <if test="record.companyId != null">
-        company_id = #{record.companyId,jdbcType=BIGINT},
+      <if test="record.deleteStatus != null">
+        delete_status = #{record.deleteStatus,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -185,12 +173,11 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update sys_role
-    set role_id = #{record.roleId,jdbcType=INTEGER},
-      role_key = #{record.roleKey,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      role_value = #{record.roleValue,jdbcType=VARCHAR},
-      company_id = #{record.companyId,jdbcType=BIGINT}
+    set id = #{record.id,jdbcType=INTEGER},
+      role_name = #{record.roleName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      delete_status = #{record.deleteStatus,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,32 +185,28 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.guonl.po.SysRole">
     update sys_role
     <set>
-      <if test="roleKey != null">
-        role_key = #{roleKey,jdbcType=VARCHAR},
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="roleValue != null">
-        role_value = #{roleValue,jdbcType=VARCHAR},
-      </if>
-      <if test="companyId != null">
-        company_id = #{companyId,jdbcType=BIGINT},
+      <if test="deleteStatus != null">
+        delete_status = #{deleteStatus,jdbcType=VARCHAR},
       </if>
     </set>
-    where role_id = #{roleId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.guonl.po.SysRole">
     update sys_role
-    set role_key = #{roleKey,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      role_value = #{roleValue,jdbcType=VARCHAR},
-      company_id = #{companyId,jdbcType=BIGINT}
-    where role_id = #{roleId,jdbcType=INTEGER}
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_status = #{deleteStatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectOneByExample" parameterType="com.guonl.po.SysRoleExample" resultMap="BaseResultMap">
     <!--
@@ -249,12 +232,11 @@
       @project https://github.com/itfsw/mybatis-generator-plugin
     -->
     insert into sys_role
-    (role_id, role_key, create_time, description, role_value, company_id)
+    (id, role_name, create_time, update_time, delete_status)
     values
     <foreach collection="list" item="item" separator=",">
-      (#{item.roleId,jdbcType=INTEGER}, #{item.roleKey,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR}, 
-        #{item.description,jdbcType=VARCHAR}, #{item.roleValue,jdbcType=VARCHAR}, #{item.companyId,jdbcType=BIGINT}
-        )
+      (#{item.id,jdbcType=INTEGER}, #{item.roleName,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, 
+        #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteStatus,jdbcType=VARCHAR})
     </foreach>
   </insert>
   <insert id="batchInsertSelective" parameterType="map">
@@ -272,23 +254,20 @@
     <foreach collection="list" item="item" separator=",">
       (
       <foreach collection="selective" item="column" separator=",">
-        <if test="'role_id' == column.value">
-          #{item.roleId,jdbcType=INTEGER}
+        <if test="'id' == column.value">
+          #{item.id,jdbcType=INTEGER}
         </if>
-        <if test="'role_key' == column.value">
-          #{item.roleKey,jdbcType=VARCHAR}
+        <if test="'role_name' == column.value">
+          #{item.roleName,jdbcType=VARCHAR}
         </if>
         <if test="'create_time' == column.value">
-          #{item.createTime,jdbcType=VARCHAR}
+          #{item.createTime,jdbcType=TIMESTAMP}
         </if>
-        <if test="'description' == column.value">
-          #{item.description,jdbcType=VARCHAR}
+        <if test="'update_time' == column.value">
+          #{item.updateTime,jdbcType=TIMESTAMP}
         </if>
-        <if test="'role_value' == column.value">
-          #{item.roleValue,jdbcType=VARCHAR}
-        </if>
-        <if test="'company_id' == column.value">
-          #{item.companyId,jdbcType=BIGINT}
+        <if test="'delete_status' == column.value">
+          #{item.deleteStatus,jdbcType=VARCHAR}
         </if>
       </foreach>
       )

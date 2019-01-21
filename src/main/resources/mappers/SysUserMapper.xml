@@ -2,17 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.guonl.dao.SysUserMapper">
   <resultMap id="BaseResultMap" type="com.guonl.po.SysUser">
-    <id column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="login_account" jdbcType="VARCHAR" property="loginAccount" />
-    <result column="login_pass" jdbcType="VARCHAR" property="loginPass" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="user_head" jdbcType="VARCHAR" property="userHead" />
-    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
-    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
-    <result column="user_sex" jdbcType="INTEGER" property="userSex" />
-    <result column="user_birthday" jdbcType="VARCHAR" property="userBirthday" />
-    <result column="register_time" jdbcType="VARCHAR" property="registerTime" />
-    <result column="department_key" jdbcType="VARCHAR" property="departmentKey" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_status" jdbcType="VARCHAR" property="deleteStatus" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,8 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, login_account, login_pass, user_name, user_head, user_phone, user_email, 
-    user_sex, user_birthday, register_time, department_key
+    id, username, password, nickname, role_id, create_time, update_time, delete_status
   </sql>
   <select id="selectByExample" parameterType="com.guonl.po.SysUserExample" resultMap="BaseResultMap">
     select
@@ -90,15 +86,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from sys_user
-    where user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_user
-    where user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.guonl.po.SysUserExample">
     delete from sys_user
@@ -107,85 +103,65 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guonl.po.SysUser">
-    insert into sys_user (user_id, login_account, login_pass, 
-      user_name, user_head, user_phone, 
-      user_email, user_sex, user_birthday, 
-      register_time, department_key)
-    values (#{userId,jdbcType=BIGINT}, #{loginAccount,jdbcType=VARCHAR}, #{loginPass,jdbcType=VARCHAR}, 
-      #{userName,jdbcType=VARCHAR}, #{userHead,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
-      #{userEmail,jdbcType=VARCHAR}, #{userSex,jdbcType=INTEGER}, #{userBirthday,jdbcType=VARCHAR}, 
-      #{registerTime,jdbcType=VARCHAR}, #{departmentKey,jdbcType=VARCHAR})
+    insert into sys_user (id, username, password, 
+      nickname, role_id, create_time, 
+      update_time, delete_status)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleteStatus,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.guonl.po.SysUser">
     insert into sys_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        user_id,
+      <if test="id != null">
+        id,
       </if>
-      <if test="loginAccount != null">
-        login_account,
+      <if test="username != null">
+        username,
       </if>
-      <if test="loginPass != null">
-        login_pass,
+      <if test="password != null">
+        password,
       </if>
-      <if test="userName != null">
-        user_name,
+      <if test="nickname != null">
+        nickname,
       </if>
-      <if test="userHead != null">
-        user_head,
+      <if test="roleId != null">
+        role_id,
       </if>
-      <if test="userPhone != null">
-        user_phone,
+      <if test="createTime != null">
+        create_time,
       </if>
-      <if test="userEmail != null">
-        user_email,
+      <if test="updateTime != null">
+        update_time,
       </if>
-      <if test="userSex != null">
-        user_sex,
-      </if>
-      <if test="userBirthday != null">
-        user_birthday,
-      </if>
-      <if test="registerTime != null">
-        register_time,
-      </if>
-      <if test="departmentKey != null">
-        department_key,
+      <if test="deleteStatus != null">
+        delete_status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="loginAccount != null">
-        #{loginAccount,jdbcType=VARCHAR},
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
       </if>
-      <if test="loginPass != null">
-        #{loginPass,jdbcType=VARCHAR},
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="userHead != null">
-        #{userHead,jdbcType=VARCHAR},
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
       </if>
-      <if test="userPhone != null">
-        #{userPhone,jdbcType=VARCHAR},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="userEmail != null">
-        #{userEmail,jdbcType=VARCHAR},
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="userSex != null">
-        #{userSex,jdbcType=INTEGER},
-      </if>
-      <if test="userBirthday != null">
-        #{userBirthday,jdbcType=VARCHAR},
-      </if>
-      <if test="registerTime != null">
-        #{registerTime,jdbcType=VARCHAR},
-      </if>
-      <if test="departmentKey != null">
-        #{departmentKey,jdbcType=VARCHAR},
+      <if test="deleteStatus != null">
+        #{deleteStatus,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -198,38 +174,29 @@
   <update id="updateByExampleSelective" parameterType="map">
     update sys_user
     <set>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=BIGINT},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.loginAccount != null">
-        login_account = #{record.loginAccount,jdbcType=VARCHAR},
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
       </if>
-      <if test="record.loginPass != null">
-        login_pass = #{record.loginPass,jdbcType=VARCHAR},
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.userName != null">
-        user_name = #{record.userName,jdbcType=VARCHAR},
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
       </if>
-      <if test="record.userHead != null">
-        user_head = #{record.userHead,jdbcType=VARCHAR},
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=INTEGER},
       </if>
-      <if test="record.userPhone != null">
-        user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.userEmail != null">
-        user_email = #{record.userEmail,jdbcType=VARCHAR},
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.userSex != null">
-        user_sex = #{record.userSex,jdbcType=INTEGER},
-      </if>
-      <if test="record.userBirthday != null">
-        user_birthday = #{record.userBirthday,jdbcType=VARCHAR},
-      </if>
-      <if test="record.registerTime != null">
-        register_time = #{record.registerTime,jdbcType=VARCHAR},
-      </if>
-      <if test="record.departmentKey != null">
-        department_key = #{record.departmentKey,jdbcType=VARCHAR},
+      <if test="record.deleteStatus != null">
+        delete_status = #{record.deleteStatus,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -238,17 +205,14 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update sys_user
-    set user_id = #{record.userId,jdbcType=BIGINT},
-      login_account = #{record.loginAccount,jdbcType=VARCHAR},
-      login_pass = #{record.loginPass,jdbcType=VARCHAR},
-      user_name = #{record.userName,jdbcType=VARCHAR},
-      user_head = #{record.userHead,jdbcType=VARCHAR},
-      user_phone = #{record.userPhone,jdbcType=VARCHAR},
-      user_email = #{record.userEmail,jdbcType=VARCHAR},
-      user_sex = #{record.userSex,jdbcType=INTEGER},
-      user_birthday = #{record.userBirthday,jdbcType=VARCHAR},
-      register_time = #{record.registerTime,jdbcType=VARCHAR},
-      department_key = #{record.departmentKey,jdbcType=VARCHAR}
+    set id = #{record.id,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      role_id = #{record.roleId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      delete_status = #{record.deleteStatus,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -256,52 +220,40 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.guonl.po.SysUser">
     update sys_user
     <set>
-      <if test="loginAccount != null">
-        login_account = #{loginAccount,jdbcType=VARCHAR},
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="loginPass != null">
-        login_pass = #{loginPass,jdbcType=VARCHAR},
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="userHead != null">
-        user_head = #{userHead,jdbcType=VARCHAR},
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
       </if>
-      <if test="userPhone != null">
-        user_phone = #{userPhone,jdbcType=VARCHAR},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="userEmail != null">
-        user_email = #{userEmail,jdbcType=VARCHAR},
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="userSex != null">
-        user_sex = #{userSex,jdbcType=INTEGER},
-      </if>
-      <if test="userBirthday != null">
-        user_birthday = #{userBirthday,jdbcType=VARCHAR},
-      </if>
-      <if test="registerTime != null">
-        register_time = #{registerTime,jdbcType=VARCHAR},
-      </if>
-      <if test="departmentKey != null">
-        department_key = #{departmentKey,jdbcType=VARCHAR},
+      <if test="deleteStatus != null">
+        delete_status = #{deleteStatus,jdbcType=VARCHAR},
       </if>
     </set>
-    where user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.guonl.po.SysUser">
     update sys_user
-    set login_account = #{loginAccount,jdbcType=VARCHAR},
-      login_pass = #{loginPass,jdbcType=VARCHAR},
-      user_name = #{userName,jdbcType=VARCHAR},
-      user_head = #{userHead,jdbcType=VARCHAR},
-      user_phone = #{userPhone,jdbcType=VARCHAR},
-      user_email = #{userEmail,jdbcType=VARCHAR},
-      user_sex = #{userSex,jdbcType=INTEGER},
-      user_birthday = #{userBirthday,jdbcType=VARCHAR},
-      register_time = #{registerTime,jdbcType=VARCHAR},
-      department_key = #{departmentKey,jdbcType=VARCHAR}
-    where user_id = #{userId,jdbcType=BIGINT}
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_status = #{deleteStatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectOneByExample" parameterType="com.guonl.po.SysUserExample" resultMap="BaseResultMap">
     <!--
@@ -327,14 +279,13 @@
       @project https://github.com/itfsw/mybatis-generator-plugin
     -->
     insert into sys_user
-    (user_id, login_account, login_pass, user_name, user_head, user_phone, user_email, 
-      user_sex, user_birthday, register_time, department_key)
+    (id, username, password, nickname, role_id, create_time, update_time, delete_status
+      )
     values
     <foreach collection="list" item="item" separator=",">
-      (#{item.userId,jdbcType=BIGINT}, #{item.loginAccount,jdbcType=VARCHAR}, #{item.loginPass,jdbcType=VARCHAR}, 
-        #{item.userName,jdbcType=VARCHAR}, #{item.userHead,jdbcType=VARCHAR}, #{item.userPhone,jdbcType=VARCHAR}, 
-        #{item.userEmail,jdbcType=VARCHAR}, #{item.userSex,jdbcType=INTEGER}, #{item.userBirthday,jdbcType=VARCHAR}, 
-        #{item.registerTime,jdbcType=VARCHAR}, #{item.departmentKey,jdbcType=VARCHAR})
+      (#{item.id,jdbcType=INTEGER}, #{item.username,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR}, 
+        #{item.nickname,jdbcType=VARCHAR}, #{item.roleId,jdbcType=INTEGER}, #{item.createTime,jdbcType=TIMESTAMP}, 
+        #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteStatus,jdbcType=VARCHAR})
     </foreach>
   </insert>
   <insert id="batchInsertSelective" parameterType="map">
@@ -352,38 +303,29 @@
     <foreach collection="list" item="item" separator=",">
       (
       <foreach collection="selective" item="column" separator=",">
-        <if test="'user_id' == column.value">
-          #{item.userId,jdbcType=BIGINT}
+        <if test="'id' == column.value">
+          #{item.id,jdbcType=INTEGER}
         </if>
-        <if test="'login_account' == column.value">
-          #{item.loginAccount,jdbcType=VARCHAR}
+        <if test="'username' == column.value">
+          #{item.username,jdbcType=VARCHAR}
         </if>
-        <if test="'login_pass' == column.value">
-          #{item.loginPass,jdbcType=VARCHAR}
+        <if test="'password' == column.value">
+          #{item.password,jdbcType=VARCHAR}
         </if>
-        <if test="'user_name' == column.value">
-          #{item.userName,jdbcType=VARCHAR}
+        <if test="'nickname' == column.value">
+          #{item.nickname,jdbcType=VARCHAR}
         </if>
-        <if test="'user_head' == column.value">
-          #{item.userHead,jdbcType=VARCHAR}
+        <if test="'role_id' == column.value">
+          #{item.roleId,jdbcType=INTEGER}
         </if>
-        <if test="'user_phone' == column.value">
-          #{item.userPhone,jdbcType=VARCHAR}
+        <if test="'create_time' == column.value">
+          #{item.createTime,jdbcType=TIMESTAMP}
         </if>
-        <if test="'user_email' == column.value">
-          #{item.userEmail,jdbcType=VARCHAR}
+        <if test="'update_time' == column.value">
+          #{item.updateTime,jdbcType=TIMESTAMP}
         </if>
-        <if test="'user_sex' == column.value">
-          #{item.userSex,jdbcType=INTEGER}
-        </if>
-        <if test="'user_birthday' == column.value">
-          #{item.userBirthday,jdbcType=VARCHAR}
-        </if>
-        <if test="'register_time' == column.value">
-          #{item.registerTime,jdbcType=VARCHAR}
-        </if>
-        <if test="'department_key' == column.value">
-          #{item.departmentKey,jdbcType=VARCHAR}
+        <if test="'delete_status' == column.value">
+          #{item.deleteStatus,jdbcType=VARCHAR}
         </if>
       </foreach>
       )

@@ -1,7 +1,7 @@
 package com.guonl.controller;
 
 import com.guonl.po.SysUser;
-import com.guonl.service.IUserService;
+import com.guonl.service.UserService;
 import com.guonl.vo.FrontResult;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -23,7 +23,7 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @ResponseBody
     @RequestMapping(value = "/getAll",method = RequestMethod.GET)

@@ -2,8 +2,6 @@ package com.guonl.service;
 
 import com.guonl.po.SysUser;
 import com.guonl.vo.FrontResult;
-import com.guonl.vo.UserVo;
-
 import java.util.Map;
 
 /**
@@ -11,11 +9,9 @@ import java.util.Map;
  * Date 2018/12/19 11:47 PM
  * Description:
  */
-public interface IUserService {
+public interface UserService {
 
     FrontResult getAllUsers();
-
-    UserVo getUserById(Long id);
 
     SysUser getSysUserByName(String userName);
 
